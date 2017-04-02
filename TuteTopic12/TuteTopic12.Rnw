@@ -1,0 +1,187 @@
+\documentclass[bigtut]{tutorial}
+\unitcode{MATH1005}
+        \unitname{Statistics}
+        \semester{Summer/Winter/Semester2}
+        \sheetnumber13
+
+\usepackage{graphicx}
+%\withsolutions
+
+\begin{document}
+\lettersfirst
+
+\begin{tutorial}
+
+\begin{center}
+\begin{tabular}{| ll |} \hline
+& \\
+{\bf Confidence Intervals} & \\
+Proportion Test  (approx) & $\hat p \pm Z \sqrt{  \frac{ \hat p (1 - \hat p) }{n} }  $ \\
+Proportion Test  (conservative) & $\hat p \pm Z  \frac{ 1 }{ 2 \sqrt{n}}   $ \\
+Z test &  $\bar x \pm Z  \frac{ \sigma }{ \sqrt{n}}   $ \\
+t test &  $\bar x \pm t_{n-1}  \frac{ s }{ \sqrt{n}}   $ \\
+2 sample t test &  $\bar x - \bar y \pm t_{n_x+n_y-2} \;   s_p \sqrt{ \frac{1}{n_x}   + \frac{1}{n_y}  }  $ \\
+& \\  \hline
+\end{tabular}
+\end{center}
+
+\vspace{.5cm}
+\begin{questions}
+
+\question CI based on ProportionTest \\
+
+A light bulb was tested to estimate the probability $\rho$ of producing the required light output.
+A sample of 1000 bulbs was tested and 810 functioned correctly. Estimate $\rho$, and find an approximate and a conservative 98\% CI for $\rho$.
+    
+\begin{solution}
+
+Population: Unknown $\rho$ \\
+Sample: $n=1000$, $x=810$. (Proportion Test) \\
+
+$\hat{\rho} = \frac {x}{n} = 0.81$. \\
+
+\vspace{0.5cm}
+An approximate 98\% CI for $\rho$ is
+\[ \hat p \pm Z_{0.98} \sqrt{  \frac{ \hat p (1 - \hat p) }{n} } \]
+where $Z_{0.98} = q$, such that $P(Z \leq q) = 0.99$, so $q=2.33$. \\
+
+<<>>=
+qnorm(0.99)
+@
+
+So the CI is
+\[ 0.81 \pm 2.33 \sqrt{  \frac{ 0.81 (1 - 0.81) }{1000} } \]
+which is (0.78,0.84). \\
+
+\vspace{0.5cm}
+A conservative 98\% CI for $\rho$ is
+\[ 0.81 \pm   2.33 \frac{ 1 }{ 2 \sqrt{n}}  \]
+which gives
+\[ 0.81 \pm   \frac{ 2.33 }{ 2 
+\sqrt{1000} } \]
+
+So the CI is (0.77,0.85).
+\end{solution}
+
+
+
+
+\question CI based on Z test \\
+
+A sample of size 100 from a population with known
+$\sigma^2=25$ produces a sample mean of 75. Construct a
+%\textsl{approximate} 
+95\% confidence interval for the population
+mean $\mu$.
+
+\begin{solution}
+Population: Unknown $\mu$, known $\sigma^2=25$. \\
+Sample: $n=100$ and $\bar{x} = 75$. (Z test) \\
+
+An approximate 95\% confidence interval for the population mean $\mu$ is
+\[
+\bar x \pm Z_{0.95}  \frac{ \sigma }{ \sqrt{n}}
+\]
+where $Z_{0.95} = q$ such that $P(Z \leq q) = 0.975$, so $q=1.96$. \\
+
+<<>>=
+qnorm(0.975)
+@
+
+So the CI is 
+\[ 75 \pm 1.96 \times 5/10\]
+which is (74.02, 75.98).
+
+\end{solution}
+
+
+
+\question Confidence Interval based on t Test   \\
+
+ The following computer summary describes a sample from a normal population with unknown variance:
+  \begin{center}
+    \begin{tabular}{ccccc}
+       Size&Mean&StDev&Min&Max\\ \hline
+       25&35.06&1.62&32.95&37.94
+   \end{tabular}
+        \end{center}
+
+\vspace{.5cm}
+Compute 95\% and 99\% confidence intervals for the population mean ($\mu$).
+
+
+\begin{solution}
+Population: Unknown $\mu$, unknown $\sigma^2$. \\
+Sample: $n=25$, $\bar{x} = 35.06$, $s=1.62$. (t test) \\
+
+An approximate 95\% confidence interval for the population mean $\mu$ is
+\[
+\bar x \pm t_{24; 0.95}  \frac{ s }{ \sqrt{n}}
+\]
+where $=t_{24;0.95} = q$ such that $P(t_{24} \leq q) = 0.975$, so $q=2.064$. \\
+
+
+<<>>=
+qt(0.975,24)
+@
+
+
+So the CI is 
+\[  35.06 \pm 2.064  \times 1.62/5\]
+which is (34.39, 35.73).
+
+An approximate 99\% confidence interval for the population mean $\mu$ is
+\[  35.06 \pm t_{24; 0.99}  \times 1.62/5\]
+where $t_{24;0.99} = q$ such that $P(t_{24} \leq q) = 0.995$, so $q=2.797$. \\
+
+
+<<>>=
+qt(0.995,24)
+@
+
+So the CI is (34.15, 35.97). (wider).
+\end{solution}
+
+
+
+
+\question CI based on 2 Sample t Test \\
+
+Two samples have been taken from two independent normal populations with equal variances. From these
+samples ($n_x = 12, n_y = 15$) we calculate $\bar x=119.4$, $\bar
+y=112.7$, $s_x=9.2$, $s_y=11.1$.  Show that the  99\% %two-sided 
+confidence interval for the difference of means $\mu_x-\mu_y$  is (-4.43, 17.83).
+
+
+\begin{solution}
+Populations: Unknown $\mu_{x}$, $\mu_{y}$, unknown common $\sigma^2$. \\
+Sample: $n_x = 12$, $n_y = 15$, $\bar x=119.4$, $\bar y=112.7$, $s_x=9.2$ and $s_y=11.1$(2 sample t test) \\
+From Week 12 Q5, we have $s_{p} = 10.30724$. \\
+
+The  99\% confidence interval for the difference of means $\mu_x-\mu_y$  is
+\[ \bar x - \bar y \pm t_{n_X+n_Y-2} \;   s_p \sqrt{ \frac{1}{n_X}   + \frac{1}{n_Y}  } \]
+which is
+\[ 119.4 -112.7 \pm t_{25;0.99} (10.30724) \sqrt{ 1/12 + 1/15}  \]
+where $t_{25;0.99}$ = $q$, such that $P(t_{25} \leq q) = 0.005$, so $q=2.787$.
+
+<<>>=
+qt(0.995,25)
+@
+
+So the CI is (-4.42564, 17.82564).
+\end{solution}
+
+
+
+
+
+
+
+
+
+
+\end{questions}
+
+\end{tutorial}
+\end{document}
+
