@@ -1,0 +1,44 @@
+\documentclass[bigtut]{tutorial}
+\unitcode{MATH1005}
+        \unitname{Statistics}
+        \semester{Summer/Winter/Semester2}
+        %\sheetnumber1
+
+\begin{document}
+\lettersfirst
+
+\begin{tutorial}
+
+You can bring your laptop to use in Labs, providing it has R and RStudio installed (see {\bf Intro to R}). However for the assessable Quizzes, you will need to use the Lab computers.
+
+\vspace{.5cm}
+To login follow these steps:
+
+\begin{enumerate}
+\item {\bf Login to Zeno}  \\
+Type in your Unikey information.  \\
+Note: If the computer is not set up for Zeno, change it to Zeno on the desktop. \\
+
+\item {\bf Open RStudio} \\
+Bring up the fluxbox menu by right clicking the mouse while the cursor is on the grey background, and then click on \texttt{RStudio}. \\
+
+\item {\bf Open up Firefox and open  maths.usyd.edu.au/MATH1005/} \\
+Now you can can access the tutorial sheets and data files. \\
+Note: Firefox may come up automatically when you login. Otherwise, you can find it in the fluxbox. \\
+
+\item {\bf Rearrange your desk top} \\
+Resize your windows so that you can work in both R and Firefox concurrently. \\
+Note: Close the X Terminal window, which opens up automatically on login. \\
+
+\item {\bf Log Off} \\
+When it comes time to log off, use the fluxbox.
+
+\end{enumerate}
+
+
+
+
+
+\end{tutorial}
+\end{document}
+
