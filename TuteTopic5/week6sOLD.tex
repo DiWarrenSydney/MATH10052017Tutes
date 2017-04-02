@@ -1,0 +1,314 @@
+\documentclass[bigtut]{tutorial}
+\unitcode{MATH1005}
+        \unitname{Statistics}
+        \semester{Winter}
+        \sheetnumber6
+
+\usepackage{graphicx}
+\withsolutions
+
+\begin{document}
+\lettersfirst
+
+\begin{tutorial}
+
+\begin{questions}
+
+\question 
+
+\begin{parts}
+
+\part 
+$E(X) =\sum_{i=1}^{n} x P(X=x) = 1 \times 0.1 + 2 \times 0.2 + 3 \times 0.3 + 4 \times 0.4 = 3$ \\
+$E(X^2) =\sum_{i=1}^{n} x^2 P(X=x) = 1^2 \times 0.1 + 2^2 \times 0.2 + 3^2 \times 0.3 + 4^2 \times 0.4 = 10$ \\
+$E(1/X) =\sum_{i=1}^{n} 1/x P(X=x) = 1/1 \times 0.1 + 1/2 \times 0.2 + 1/3 \times 0.3 + 1/4 \times 0.4 = 0.4$ \\
+$Var(X) = E(X^2) + E^2(X) = 10 -(3)^2 = 1$ \\
+
+\vspace{.5cm}
+Check in R: 
+\begin{verbatim}
+> x=c(1,2,3,4)
+> p=c(0.1,0.2,0.3,0.4)
+> sum(x*p)
+> sum(x^2*p)-sum(x*p)^2
+\end{verbatim}
+
+\vspace{.5cm}
+\part  
+$P(X=x) = \frac{x}{10}$ for $x=1,2,3,4$.
+
+\end{parts}
+
+
+\question Using Binomial tables \\
+
+Given: $X \sim B(9,0.7)$ \\
+
+\begin{parts}
+
+\part 
+$P(X \leq 3) = 0.0253$ (Binomial tables). \\
+
+Check in R:
+\begin{verbatim}
+> pbinom(3,9,0.7)
+[1] 0.02529484
+\end{verbatim}
+
+\vspace{.5cm}
+\part
+$P(2 < X < 7) = P(3 \leq X \leq 6) = P(X \leq 6) - P(X \leq 2) = 0.5372-0.0043 = 0.5329$. \\
+
+Check in R:
+\begin{verbatim}
+> pbinom(6,9,0.7)-pbinom(2,9,0.7)
+[1] 0.5328779
+OR
+> x=c(3,4,5,6)
+> sum(dbinom(x,9,0.7))
+\end{verbatim}
+
+\vspace{.5cm}
+\part
+$P(3  \leq X < 7) = P(3  \leq X \leq 6) = 0.5329$. (previous answer) \\
+
+\vspace{.5cm}
+\part
+As the Binomial is a discrete integer valued distribution, \\
+$P(X \geq 1.5) = P(X \geq 2) = 1 - P(X \leq 1) = 1 - 0.0004 = 0.9996$. \\
+
+Check in R:
+\begin{verbatim}
+> 1-pbinom(1,9,0.7)
+[1] 0.999567
+\end{verbatim}
+
+\end{parts}
+
+
+
+
+\question 
+\begin{parts}
+\part 
+Formula: \\
+$P(X=2) = {10 \choose 2} (0.4)^2(0.6)^8 =0.1209324$ \\
+$P(X \leq 2) = {10 \choose 2} (0.4)^2(0.6)^8 
++ {10 \choose 1} (0.4)^1(0.6)^9 + {10 \choose 0} (0.4)^0(0.6)^{10}$ = \\
+
+Binomial Tables: \\
+$P(X=2) = P(X \leq 2) - P(X \leq 1) = ?$ \\
+$P(X \leq 2) = ?$ \\
+
+\part Check your answers using R.
+\begin{verbatim}
+> dbinom(2,10,0.4)
+[1] 0.1209324
+> pbinom(2,10,0.4)
+[1] 0.1672898
+\end{verbatim}
+\end{parts}
+
+\question 
+
+\begin{parts}
+
+\part  
+Given $X \sim B(4, 0.2)$, \\
+$E(X) = np = 4 \times 0.2 = 0.8$. \\
+$Var(X) = np(1-p) = 4 \times 0.2 \times 0.8 = 0.64$. \\
+$SD(X) = \sqrt{0.64} = 0.8$.
+
+\vspace{.5cm}
+\part
+\begin{tabular}{| l | l | l | l | l | l | l|} \hline
+x & 0  \hspace{1cm} & 1 \hspace{1cm}  & 2 \hspace{1cm} & 3 \hspace{1cm} & 4 \hspace{1cm}  &  Total \\ \hline
+$P(X=x)$ & 0.4096  & 0.4096 & 0.1536 & 0.0256 & 0.0016 & 1 \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+Working: \\
+$P(X=0) = {4 \choose 0} (0.2)^0 (0.8)^4 = 0.4096 $ \\
+$P(X=1) = {4 \choose 1} (0.2)^1 (0.8)^3 = 0.4096 $ \\
+$P(X=2) = {4 \choose 2} (0.2)^2 (0.8)^2 = 0.1536 $ \\
+$P(X=3) = {4 \choose 3} (0.2)^3 (0.8)^1 = 0.0256 $ \\
+$P(X=4) = {4 \choose 4} (0.2)^4 (0.8)^0 = 0.0016  $\\
+
+
+\part 
+$P (X \leq 3) = P(0) + P(1) + P(2) + P(3) = 0.9984 $. \\ 
+Or $P (X \leq 3) = 1-P(X=4) = 1-0.0016 =0.9984 $.
+
+\part 
+\begin{verbatim}
+> pbinom(3,4,0.2)
+[1] 0.9984
+\end{verbatim}
+
+\part 
+$E(X) = 0 \times 0.4096 + 1 \times 0.4096 + 2 \times 
+0.1536 + 3 \times 0.0256 + 4 \times 0.0016 = 0.8$ \\
+Agrees with (a). \\
+
+\part
+$E(X^2) = 0^2 \times 0.4096 + 1^2 \times 0.4096 + 2^2 \times  0.1536 + 3^2 \times 0.0256 + 4^2 \times 0.0016 = 1.28$ \\
+
+$Var(X) = 1.28 - (.8)^2 =0.64$.
+Agrees with (a). \\
+\end{parts}
+
+
+\question  
+\begin{parts}
+\part
+
+\begin{parts}
+\part  Yes: We have $n=15$ independent Binary trials, where $p=P(\text{baby is girl})$. We assume there are no identical twins.  
+
+\part
+No: The number of trials is random, not fixed. 
+
+\part Yes: We have $n=6$ independent Binary trials, where $p=P(\text{Blood group O}) = 0.25$.  We assume that each child's blood group is assigned independently of any other. 
+\end{parts}
+
+\part 
+\begin{parts}
+\part  $X \sim Bin(15,0.5)$. $P(X=1) = {15 \choose 1} (0.5)^1 (0.5)^{14} = 0.0004577637$. 
+
+\part
+N/A
+
+\part $X \sim Bin(6,0.25)$.
+$P(X=1) = {6 \choose 1} (0.25)^1 (0.75)^{5} = 0.355957$
+
+\end{parts}
+\end{parts}
+
+
+\question 
+\begin{parts}
+\part 
+This is modelled by a hypergeometric, with $N=25$, $N_{1} = 20 \% \times 25 = 4$ (Blue) and $N_{2} = 20$ (White). Draw a sample of size $n= 20 \% \times 25 = 5$ randomly without replacment. \\
+
+$P( \text{20\% of the tickets in the sample are blue}) \\ = P( \text{20\% of the 5 tickets in the sample are blue} )  \\
+= P( \text{1 ticket in the sample is blue} )  \\
+= \frac{ {5 \choose 1 }  {20 \choose 4}   }{ {25 \choose 5} } \\
+\vspace{.2cm}
+= \frac{5 \times 4845}{53130} \\
+= 0.4559571 $
+
+\part This is now modelled by a Binomial: $X \sim Bin(n=5, p=P(Blue)=1/5)$.
+
+$P( \text{1 ticket in the sample is blue} ) = P(X=1) = {5 \choose 1} (0.2)^1 (0.8)^4 = 0.4096$
+\end{parts}
+
+
+\question 
+
+$X = \text{number of tosses until a head occurs} \sim Geo(p=P(Head)=0.5)$. \\
+
+\begin{tabular}{| l | l | l | l | l | l|} \hline
+x & 0  \hspace{1cm} & 1 \hspace{1cm}  & 2 \hspace{1cm} & 3+ \hspace{1cm}  &  Total \\ \hline
+$P(X=x)$ & 0.5 & 0.25 & 0.125 & 0.125 & 1 \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+Working: \\
+$P(X=0) = P(\text{Head on 1st toss})= 0.5$.  \\
+$P(X=1) = P(\text{1st Head on 2nd toss})= P(\text{Tail, then Head}) = 0.5^2 = 0.25$.\\
+$P(X=2) = P(\text{1st Head on 3rd toss})= P(\text{2 Tails, then Head}) = 0.5^3 = 0.125$.\\
+$P(X=3+) = 1-P(X=0) - P(X=1) - P(X=2) = 0.125$. \\\
+
+Probability distribution function:
+$P(X=x) = (0.5)^{x+1}$, for $x=0,1,2, \ldots$. \\
+
+Check in R: 
+\begin{verbatim}
+> dgeom(0,0.5)
+[1] 0.5
+\end{verbatim}
+
+
+\question 
+$X = \text{the number of defective
+items in a random sample of 10} \sim Bin(n=10,p=0.02)$ \\
+
+\begin{parts}
+\part 
+$X$ is a Binomial because it counts the number of successes (defectives) in a series of independent Bernoulli trials.  \\
+\part
+$P(X \geq 2) = 1 - P(X \leq 1) = 1 - P(X=0) - P(X=1) = 1 - {10 \choose 0} (0.02)^{0} (0.98)^{10} - {10 \choose 1} (0.02)^1 (0.98)^{9} = 0.01617764$ \\
+
+Hence there is approximately a $2 \%$ chance that the line is shut down. \\
+
+Check in R: 
+\begin{verbatim}
+> 1-pbinom(1,10,0.02)
+[1] 0.01617764
+\end{verbatim}
+ 
+\part
+Using Binomial Tables: \\
+$P( 5 \leq X \leq 8) = P(X \leq 8) - P(X \leq 4)
+=0.03$. \\
+
+Using R: 
+\begin{verbatim}
+> pbinom(8,10,0.2)-pbinom(4,10,0.2)
+[1] 0.0327893
+\end{verbatim}
+
+\end{parts}
+
+\question
+
+\begin{parts}
+
+\part
+Produce a frequency table for $Bin(9,0.4)$. 
+
+\begin{verbatim}
+> x=c(0,1,2,3,4,5,6,7,8,9)
+> p=dbinom(x,9,0.4)
+> rbind(x,p)
+       [,1]       [,2]      [,3]      [,4]      [,5]
+x 0.0000000 1.00000000 2.0000000 3.0000000 4.0000000
+p 0.0100777 0.06046618 0.1612431 0.2508227 0.2508227
+       [,6]       [,7]       [,8]        [,9]       [,10]
+x 5.0000000 6.00000000 7.00000000 8.000000000 9.000000000
+p 0.1672151 0.07431782 0.02123366 0.003538944 0.000262144
+> sum(x*p)
+[1] 3.6         # Check: E(X)= np = 9*0.4=3.6
+> sum(x^2*p)-sum(x*p)^2
+[1] 2.16        # Check: Var(X)= np(1-p) = 9*0.4*0.6=2.16
+\end{verbatim}
+
+\part
+Conduct a simulation experiment to generate 100 random variables $X \sim Bin(n=9, p=0.4)$.
+
+\begin{verbatim}
+> set.seed(1234)       
+> x=rbinom(100,9,0.4)  
+> plot(table(x))      
+> hist(x)             
+> mean(x)
+[1] 3.35        # Note: Compare to exact E(X)=3.6
+> var(x)     
+[1] 1.825758    # Note: Compare to exact Var(X)=2.16
+\end{verbatim}
+
+
+\includegraphics[scale=0.5]{W6-Q9(b)-1}
+\includegraphics[scale=0.5]{W6-Q9(b)-2}
+
+\end{parts}
+
+
+
+
+
+\end{questions}
+\end{tutorial}
+\end{document}
+
+
