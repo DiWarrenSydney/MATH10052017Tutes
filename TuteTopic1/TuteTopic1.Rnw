@@ -1,0 +1,482 @@
+\documentclass[bigtut]{tutorial}
+\unitcode{MATH1005}
+        \unitname{Statistics}
+        \semester{Summer/Winter/Semester2}
+        \sheetnumber2
+
+
+\usepackage{graphicx}
+\withsolutions
+
+\begin{document}
+\lettersfirst
+
+\begin{tutorial}
+
+\begin{center}
+\fbox{
+\begin{minipage}{7in} 
+{\bf Learning in Tutorials}  
+\begin{itemize}
+\item The role of the tutor is to help you learn more deeply, so the more work you do before the tutorial, the more you will get out of it. 
+\item Work at your own pace during the tutorial class and then finish off all the questions at home.   
+\item If you finish all the tutorial questions, work on your next Report or the Revision material. 
+\end{itemize}
+\end{minipage}
+}
+\end{center}
+
+\vspace{.5cm}
+\begin{questions}
+
+
+
+\vspace{.5cm}
+\question Australian Road Fatalities \\
+
+The following data is road fatalities in Australia from Jan 1989 - May 2016.
+
+<<eval=F>>=
+Road <- read.csv("http://www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/
+                 AllFatalities.csv")
+@
+
+\vspace{.5cm}
+\begin{parts}
+
+\part  What size is the data? How many variables are there? How does this data relate to the example in Topic1 lectures?
+
+<<eval=F>>=
+dim(Road)
+names(Road)
+@
+
+\vspace{.5cm}
+\part  A Data Dictionary gives information about a given data set, such as collection, missing values and variables.
+Classify the following variables using the Data Dictionary. \\ 
+{\tiny http://www.maths.usyd.edu.au/u/UG/JM/StatsData.html}  \\
+
+\begin{tabular}{|l|l|l|l|l|} \hline
+& Numerical & Numerical & Categorical & Categorical \\
+Variable & Continuous \hspace{1cm} &  Discrete \hspace{1cm} &  Nominal \hspace{1cm} &  Ordinal \hspace{1cm} \\ \hline
+State & & & Y & \\ \hline
+Year & & Y & & \\ \hline
+Dayweek & &  &  & \\ \hline
+CrashType & & &  & \\ \hline
+SpeedLimit & & & &  \\ \hline
+RoadUser & & & & \\ \hline
+Gender & & &  & \\ \hline
+Age & & & & \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+To check how R has classified the variables, use
+<<eval=F>>=
+str(Road)
+@
+
+Note: You may have rightly characterised Age as Numerical data, but here R has chosen to classify Age as Categorical Ordinal (factor).
+
+\vspace{.5cm}
+\part
+Select the Age variable and produce the following graphical summaries:
+
+<<fig.height=2.5,eval=F>>=
+Age <- Road$Age
+class(Age)
+table(Age)
+plot(table(Age))
+@
+
+\vspace{.5cm}
+\part
+Now re-classify the Age variable as numerical data, and then produce the following graphical summaries:
+
+<<fig.height=2.5,eval=F>>=
+AgeN<- as.numeric(levels(Age))[Age]
+class(AgeN)
+hist(AgeN)
+boxplot(AgeN)
+@
+
+\vspace{.5cm}
+\part
+Each command can be customised. Find out the options using \texttt{help()} or \texttt{?}. \\ 
+
+
+Experiment with customising these commands.
+
+<<fig.height=3,eval=F>>=
+help(hist)
+hist(AgeN,freq=FALSE,main="Histogram",ylab="Probabilities", col="green")
+?boxplot
+boxplot(AgeN,horizontal=TRUE,col="red")
+@
+
+\vspace{.5cm}
+\part Write a sentence summarising what the histogram and boxplot tell you about the age of road fatalities in Australia (Jan 1989 - May 2016).
+
+\vspace{.5cm}
+\part What is the most common and least common days for road fatalities?
+
+<<eval=F>>=
+Dayweek <- Road$Dayweek
+class(Dayweek)
+table(Dayweek)
+plot(table(Dayweek))
+@
+
+\vspace{.5cm}
+Note to change the labels to shorter names:
+<<eval=F>>=
+levels(Dayweek)
+levels(Dayweek) = c("F","M","S","Su","Th","T","W")
+plot(table(Dayweek))
+@
+
+\vspace{.5cm}
+\part (Extension:  How can you make more sense of this graph? Reorder the factors alphabetically.)
+
+
+<<eval=F>>=
+DayweekOrdered <- factor(Dayweek,levels=c("M","T","W","Th","F","S","Su"))
+plot(table(DayweekOrdered))
+@
+
+\vspace{.5cm}
+\part Pick another variable and do your own investigation.
+\end{parts}
+
+\vspace{.5cm}
+\begin{solution}
+This data consists of all Australlian road fatalities from 1989-2016: 46624 fatalities with 18 variables. The data from lectures was just a recent subset of the data: Jan-March 2016.  \\
+
+\begin{tabular}{|l|l|l|l|l|} \hline
+& Numerical & Numerical & Categorical & Categorical \\
+Variable & Continuous \hspace{1cm} &  Discrete \hspace{1cm} &  Nominal \hspace{1cm} &  Ordinal \hspace{1cm} \\ \hline
+State & & & Y & \\ \hline
+Year & & Y & & \\ \hline
+Dayweek & &  & Y & \\ \hline
+CrashType & & & Y & \\ \hline
+SpeedLimit & & & & Y \\ \hline
+RoadUser & & & Y & \\ \hline
+Gender & & & Y & \\ \hline
+Age & Y & Y & & Y \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+The most common day is Saturday, and then least common day is Monday.
+\end{solution}
+
+%\newpage
+\question Efficiency of Australian Commercial Refrigerators \\
+
+The following data concerns commercial refrigerators in Australia, in particular the
+efficiency (in kWh/24h/mÂ²).
+
+<<eval=F>>=
+Fridge <- read.csv("http://www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/
+                 Refrigerators.csv")
+@
+
+\vspace{.5cm}
+\begin{parts}
+
+\part  What size is the data? How many variables are there? 
+
+<<eval=F>>=
+dim(Fridge)
+names(Fridge)
+@
+
+\vspace{.5cm}
+\part  Classify the following variables using the Data Dictionary. \\ 
+{\tiny http://www.maths.usyd.edu.au/u/UG/JM/StatsData.html}  \\
+
+\begin{tabular}{|l|l|l|l|l|} \hline
+& Numerical & Numerical & Categorical & Categorical \\
+Variable & Continuous \hspace{1cm} &  Discrete \hspace{1cm} &  Nominal \hspace{1cm} &  Ordinal \hspace{1cm} \\ \hline
+Brand & & & Y & \\ \hline
+Country & &  & & \\ \hline
+Sold in & &  &  & \\ \hline
+Total energy cons & & & & \\ \hline
+Efficiency & & & &  \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+\part Comment on the country of manufacture. 
+
+<<eval=F>>=
+Country <- Fridge$Country
+class(Country)
+plot(Country)
+table(Country)
+@
+
+\vspace{.5cm}
+\part Comment on efficiency.
+
+<<eval=F>>=
+Efficiency <- Fridge$Efficiency..kWh.24h.m..
+hist(Efficiency)
+boxplot(Efficiency)
+@
+
+\vspace{.5cm}
+\part Pick another variable and do your own investigation.
+\end{parts}
+
+\vspace{.5cm}
+\begin{solution}
+The data consists of 2480 commerical refrigerators with 23 variables. \\
+
+\begin{tabular}{|l|l|l|l|l|} \hline
+& Numerical & Numerical & Categorical & Categorical \\
+Variable & Continuous \hspace{1cm} &  Discrete \hspace{1cm} &  Nominal \hspace{1cm} &  Ordinal \hspace{1cm} \\ \hline
+Brand & & & Y & \\ \hline
+Country & &  & Y & \\ \hline
+Sold in & &  & Y  & \\ \hline
+Total energy cons & & Y & & \\ \hline
+Efficiency & & Y & &  \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+The most common countries are: Italy (640) and China (624), followed by New Zealand (314). \\
+Efficiency has a right skewed distribution with outliers, indicating some refrigerators have an efficiency far exceeding/worse than the rest.
+\end{solution}
+
+
+\vspace{.5cm}
+\question
+Investigate demographics in in the USA, using the following Big Data summaries:
+http://datausa.io/map/ \\
+
+For example: 
+
+\begin{parts}
+\part
+What states have the highest and lowest Violent Crime rates?
+\part
+What states have the highest and lowest Average Salary?
+\part
+What states have the highest incidence of Diabetes and Obesity?
+\end{parts}
+
+\vspace{.5cm}
+\begin{solution}
+Violent Crime: Tennesee 621.3/100,000 or 0.006213\% (highest); Maine 122.7 (lowest) \\
+Average Salary: Columbia  \$72,810.10; Puerto Rico \$25,227 USD. \\
+Diabetes: Mississippi 12.5\%; Colorado 6.8\%
+Obesity: Mississippi 35.3\%; Colorado 20.1\% \\
+\end{solution}
+
+
+
+\newpage
+\hspace{-1cm} {\bf Extra Questions}
+
+\question Classify Data in Everyday Life \\
+
+For the following scenarios, find appropriate variables. \\
+
+\begin{tabular}{|l|l|l|l|l|} \hline
+& Numerical & Numerical & Categorical & Categorical \\
+Scenario & Continuous \hspace{1cm} &  Discrete \hspace{1cm} &  Nominal \hspace{1cm} &  Ordinal \hspace{1cm} \\ \hline
+Netball Match & & & & \\ \hline
+KFC Drive-through & & & & \\ \hline
+Hospital & & & & \\ \hline
+Masterchef & & & & \\ \hline
+\end{tabular}
+
+\vspace{.5cm}
+\begin{solution}
+{\tiny 
+\begin{tabular}{|l|l|l|l|l|} \hline
+& Numerical & Numerical & Categorical & Categorical \\
+Scenario & Continuous \hspace{1cm} &  Discrete \hspace{1cm} &  Nominal \hspace{1cm} &  Ordinal \hspace{1cm} \\ \hline
+Netball Match & Height of players & Number of Goals & Position: Goals/Court & Played which Quarter \\ \hline
+KFC Drive-through & Time & Number of Items & Gender of Staff & Rate service \\ \hline
+Hospital & Age of building & Number of staff & State & Cleanliness standard \\ \hline
+Masterchef & Quantity of cream & Number of contestants & Type of dish & What Star Chef  \\ \hline
+\end{tabular}
+}
+\end{solution}
+
+
+
+\question True heat of Platinum \\
+
+In an attempt to measure the `true' heat of sublimation of platinum (in kcal/mole),
+Hampson and Walker (1961) recorded the following data:
+
+\begin{center}
+\begin{tabular}{llllllll}
+136.2&136.6&135.8&135.4&134.7&135.0&134.1&143.3 \\
+147.8&148.8&134.8&135.2&134.9&146.5&141.2&135.4 \\
+134.8&135.8&135.0&133.7&134.2&134.9& 134.8 & 134.5 \\
+134.3 & 135.2 &&&&&&
+\end{tabular}
+\end{center}
+{\tiny Source: http://nvlpubs.nist.gov/nistpubs/jres/65A/jresv65An4p289\_A1b.pdf} 
+
+\vspace{.5cm}
+\begin{parts}
+\part Who would be interested in ths data and why?
+\part
+Import the data into R.
+<<eval=F>>=
+Plat=scan(file=url("http://www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/
+                Platinum.txt"))
+@
+
+\part Produce graphical summaries and comment on your results.
+<<eval=F>>=
+stem(Plat)
+stem(Plat,scale=2)
+hist(Plat,breaks=c(133:137,140,143,146,149),right=F)
+hist(Plat,breaks=c(133:137,140,143,146,149),right=F)$counts
+@
+
+Note:  \\
+(1) R chooses what it considers to be an appropriate spread of the stem and leaf plot. So we use the parameter \texttt{scale =} to change the default layout. In this particular example, using \textsf{scale = 2} produces a single stem plot. \\
+
+(2) \texttt{\$counts} adds the counts per interval.
+
+\part Now complete the graphical summaries by hand. Complete the following unsorted `single' stem and leaf plot, where the break is at the decimal point.  The first 5 entries have been done already.   \\
+
+\begin{center}
+\begin{tabular}{l | l} 
+133 &  \\ 
+134 & 7 \\
+135 & 8 4 \dots \\
+136 & 2  6 \dots \\
+\vdots &  \\
+\vdots &  \\
+\vdots &  \\
+148 &  \\
+\end{tabular}
+\end{center}
+
+Note: The single stem version has 10 digits/leaves on each row/stem.
+
+
+\part
+Complete the following frequency table, and draw a histogram. \\
+
+\begin{center}
+\begin{tabular}{|l |l |l |l |} \hline
+Interval & Frequency & Relative Frequency (3dp) & Height  (3dp)  \\ \hline
+[133,134) & 1 & 0.038 & 0.038  \\ \hline
+[134,135) & 10  &   &   \\ \hline
+[135,136) & & &  \\ \hline
+[136,137) & & &  \\ \hline
+[137,140) & & &  \\ \hline
+[140,143) & & &  \\ \hline
+[143,146) & & &  \\ \hline
+[146,149) & 3 & 0.115 & 0.038   \\ \hline
+Total & & &  \\ \hline
+\end{tabular}
+\end{center}
+
+where: \\
+Relative Frequency = Frequency/Total \\
+Height = Relative Frequency/Interval Width
+\end{parts}
+
+
+\vspace{.5cm}
+\begin{solution}
+Data could be of interest to anyone using Platinum commercially. The shape is right skewed (long right tail), indicating some very high values of  'true' heat relative to the rest of data, which could be investigated further.
+\end{solution}
+
+
+
+
+\begin{solution}
+
+Check your hand working against the following R output.
+
+\vspace{.5cm}
+\begin{tabular}{|c |c |c |c |} \hline
+Interval & Frequency & Relative Frequency \% & Height \\ \hline
+[133,134) & 1 & 1/26 = 3.8 & 3.8/1=3/8  \\ \hline
+[134,135) & 10 & 10/26 = 38.5 &  38.5/1=38.5  \\ \hline
+[135,136) & 8 & 8/26 =  30.1 & 30.1/1=30.1  \\ \hline
+[136,137) & 2 & 2/26 = 7.7 &  7.7/1=7.7  \\ \hline
+[137,140) & 0 & 0 & 0/3=0 \\ \hline
+[140,143) & 1 & 1/26 = 3.8 & 3.8/3 $\approx$ 1.3  \\ \hline
+[143,146) & 1 & 1/26 = 3.8  & 3/8/3 $\approx$ 1.3 \\ \hline
+[146,149) & 3  & 3/26 =  11.5 & 11.5/3 $\approx$ 3.8  \\ \hline
+Total & 26 &  100 (rounding) & \\ \hline
+\end{tabular}
+\end{solution}
+
+
+\question Mining Core Samples  (From the 1998 examination)  \\
+
+A mining company finds a body of ore and obtains 24 core samples by drilling at equally spaced intervals along the body. The samples are analysed for percentage content of a valuable mineral giving the following results:
+
+
+  \begin{center}
+  \begin{tabular}{llllllll}
+ 17&18&26&18&31&31&19&17\\
+ 22&13&19&17&16&14&13&10\\
+ 16&14&13&23&16&20&18&30
+ \end{tabular}
+   \end{center}
+                       
+Prepare both single and double stem-and-leaf plots. Which one is preferable and why? \\
+
+Note: The double stem version has 5 digits/leaves on each row/stem. 
+
+
+
+
+\begin{solution}
+Check your working against the following R output.
+<<fig.height=3>>=
+x=c(17,18,26,18,31,31,19,17,22,13,19,17,16,14,13,10,16,14,13,23,16,20,18,30)
+stem(x)
+stem(x,scale=0.5)
+@
+  
+Note: Here by default R chooses a double stem and leaf plot. Hence,we use \texttt{scale=0.5} to get a single stem and leaf plot. \\
+
+Comment: The double stem plot is preferable, because it's easier to see the shape (some right skewing). The single stem plot is a bit overcondensed.
+\end{solution}
+
+
+\question Icecreams in Canada \\
+
+The following table gives the number of ice creams sold in a coffee shop
+on each day in January 2002 in a Canadian city:
+\begin{center}
+ \begin{tabular}{llllllll}
+   2&0&0&1&1&0&2&1\\
+ 3&3&6&7&0&4&1&0\\
+1&1&3&2&1&0&8&0\\
+  0&4&5&1&0&2&3&
+ \end{tabular}
+\end{center}
+
+Prepare a suitable frequency distribution table for this data. Draw an ordinate
+diagram and comment.
+
+
+\begin{solution}
+
+Check your working against the following R output.
+<<fig.height=3>>=
+x=c(2,0,0,1,1,0,2,13,3,6,7,0,4,1,0,1,1,3,2,1,0,8,0,0,4,5,1,0,2,3)
+table(x)
+plot(table(x),xlab="Icecreams", ylab="Frequency",main="Ordinate Diagram")
+@
+
+Comment: The data is right skewed, indicating there are many days when very few icecreams are sold, as might be expected given climate. 
+
+\end{solution}
+
+\end{questions}
+\end{tutorial}
+\end{document}
+
