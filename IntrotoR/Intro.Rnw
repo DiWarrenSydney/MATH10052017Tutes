@@ -1,0 +1,242 @@
+\documentclass[bigtut]{tutorial}
+\unitcode{MATH1005}
+        \unitname{Statistics}
+        \semester{Summer/Winter/Semester2}
+        %\sheetnumber1
+
+\begin{document}
+\lettersfirst
+
+\begin{tutorial}
+
+\begin{displaybox}
+This self-study tutorial is an introduction to R. \\
+It should be completed at home before your first tutorial lab.\\
+\end{displaybox}
+\vskip -2mm
+
+\vspace{.5cm}
+{\bf Why learn R/R Studio?}   
+
+Throughout MATH1005 we use a versatile statistical language called {\bf R}, which provides a wide and ever-increasing suite of statistical and graphical techiques. 
+
+{\bf R} is a programming language, which means it is not menu-driven. All commands are case sensitive and are written and executed in the console window at the prompt. However, there
+are certain tasks which can be implemented through the menus, like installing new packages. 
+Data in R are organised as named structures. We will mainly deal with
+the simplest such structures: vectors and matrices. They can be numerical data (like
+height and weight) or categorical factors (like gender and type of diet). R treats factors and numerical data differently, and can combine them in a “data frame”. Each vector must contain elements of only one type, while a data frame can contain columns of different types. 
+
+{\bf R Studio} is an integrated user interface for R.  When you open up R Studio, it automatically runs R.
+
+\vspace{.5cm}
+\begin{questions}
+
+\question Overview of R  \\
+
+To get an overview of how R works, complete this excellent free online tutorial: tryr.codeschool.com/ \\ 
+It takes about an hour but will give you an excellent introduction to R. \\
+
+Another good sumamry is: https://learnxinyminutes.com/docs/r/
+
+\question Download R/R Studio for home usage (free)  \\
+
+R and R Studio are available in the Carslaw computer labs. However we recommend you download both R and R Studio onto your home computer so that you can do your Reports at home, and for use in other subjects. \\
+
+$\bullet$ Download R from the CRAN
+(Comprehensive R Archive Network) website:  \\
+PC: cran.r-project.org/bin/windows/base/ \\
+Mac: cran.r-project.org/bin/macosx/ \\
+
+$\bullet$ Download RStudio: crstudio.com/products/rstudio/download/  \\
+
+Alternatively, you can use RFiddle: http://www.r-fiddle.org/ 
+
+\newpage
+\question The layout of R Studio \\
+
+Type commands into the main console window.
+Note the `Help' Tab which allows you to look up commands. \\
+
+\includegraphics[height=3cm]{RStudioLayout.jpg}
+
+\question Uploading data into RStudio \\
+
+There are many ways to upload data into RStudio, depending on the size of the data and in what form it is stored.
+
+\vspace{1cm}
+{\bf Method1: Enter data manually (for small datasets)}
+
+<<>>=
+x=c(1.1,2.3,4.5,6.7,3.2)
+@
+
+Note that the vector \texttt{x} is now listed in the Environment. \\
+
+To see what is stored inside \texttt{x}, type the name of the vector
+<<>>=
+x
+@
+
+\vspace{1cm}
+{\bf Method2: Copy and paste the data from a file}
+
+\begin{itemize}
+\item At the R prompt enter  \texttt{y=scan()} (the prompt changes to ``\texttt{1:}'' indicating that it is waiting for the 1st data point).
+<<>>=
+y=scan()
+@
+
+\vspace{.5cm}
+\item Right click to copy and paste these numbers: 1 3 5 7 8 8 
+
+\vspace{.5cm}
+\item Click next to the ``\texttt{1:}'' prompt, paste the numbers and hit \textsf{Enter} twice.
+\end{itemize}
+
+
+\vspace{1cm}
+{\bf Method3: Import data from the Internet} 
+
+\begin{itemize}
+\item
+For \texttt{.csv} file: 
+<<eval=F>>=
+Road <- read.csv("http://www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/
+                 2016Fatalities.csv")  
+@
+
+\vspace{.5cm}
+\item
+For \texttt{.txt} file: 
+<<eval=F>>=
+Mice <- read.table("http://www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/Mice.txt")  
+@
+
+<<eval=F>>=
+Mice=scan(file=url("www.maths.usyd.edu.au/u/UG/JM/MATH1005/r/StatsData/Mice.txt"))
+@
+
+\end{itemize}
+
+\newpage
+
+{\bf Method4: Import a file from a directory} \\
+
+\includegraphics[height=1.5cm]{ImportData.jpg}
+
+
+\vspace{1cm}
+{\bf Method5: Import a file from a directory}
+
+\begin{itemize}
+
+\item
+Download the {\tt 2016Fatalities.csv} file into a directory. \\
+The data files are found here: 
+http://www.maths.usyd.edu.au/u/UG/JM/StatsData.html \\
+
+\item
+Change the RStudio Working Directory to where your file is stored, by clicking on \textsf{Session/Set Working Directory/Choose Directory} and choosing where the file is stored. \\
+
+\includegraphics[height=3.5cm]{Setwd.jpg} \\
+
+\item
+Alternatively, use the command 
+<<eval=F>>=
+setwd()
+@
+to specify the directoryaddress. \\
+
+\item
+Upload the file into R.
+
+<<>>=
+Road <- read.csv("2016Fatalities.csv",header=T) 
+@
+
+\vspace{.5cm}
+Note: You can check what the Working Directory is by using 
+<<eval=F>>=
+getwd()
+@
+\end{itemize}
+
+
+
+\question Snapshot of Multivariate Data \\
+
+\begin{itemize}
+
+\item
+The \texttt{dim} command gives the dimension of the matrix.
+<<>>=
+dim(Road)
+@
+
+\vspace{.5cm}
+\item
+The \texttt{names} command lists the variables.
+<<>>=
+names(Road)
+@
+
+\vspace{.5cm}
+\item
+The \texttt{head} command lists the top of the dataset, where \texttt{1} specifies the 1st row.
+<<>>=
+head(Road,1)
+@
+
+\vspace{.5cm}
+\item
+The \texttt{str} command classifies each variable.
+{\tiny 
+<<>>=
+str(Road)
+@
+}
+
+\vspace{.5cm}
+\item
+To choose a particular variable, select \texttt{dataname\$variablename}
+<<>>=
+SpeedLimit <- Road$SpeedLimit
+@
+
+
+\vspace{.5cm}
+\item
+To classify a particular variable, use the \texttt{class} command.
+<<>>=
+class(SpeedLimit)
+@
+
+\vspace{.5cm}
+\item
+A factor can be re-classified as numerical by using the \texttt{as.numeric} command.
+
+\vspace{.5cm}
+\item
+Most commands are easy to guess.
+<<eval=F>>=
+mean(SpeedLimit)
+hist(SpeedLimit)
+x+1
+1/2*(exp(x))
+@
+
+
+\end{itemize}
+
+\question Saving Results \\
+
+It is good practise to make a summary of your work in each tutorial. The easiest way is to: \\
+(1) Open an RScript file [Click on \textsf{File/New File/R Script}] \\
+(2) Copy and paste useful commands. \\
+(3) Save the file. \\
+(4) In RStudio, you can reopen this file at any time, and press \textsf{Run} to perform the commands again. \\
+
+\end{questions}
+\end{tutorial}
+\end{document}
+
