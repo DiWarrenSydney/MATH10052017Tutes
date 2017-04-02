@@ -1,0 +1,430 @@
+\documentclass[bigtut]{tutorial}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\unitcode{MATH1005}
+        \unitname{Statistics}
+        \semester{Summer/Winter/Semester2}
+        \sheetnumber10
+
+\usepackage{graphicx}
+\withsolutions
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\lettersfirst
+
+\begin{tutorial}
+
+\begin{center}
+\begin{tabular}{| ll |} \hline
+& \\
+{\bf Proportion Test} & \\
+Context & $n$ independent Binary trials with unknown success probability $\rho$ \\
+Hypothesis &   $H_{0}: \rho = \rho_{0}$   \\
+Test Statistic & $X=$ \# successes $  \overset{H_0}{\sim} Bin(n, \rho_{0})$      \\ 
+& \\  
+& Note: For large $n$, $X$ can be approximated by a Normal, with continuity correction. \\ 
+& \\ \hline
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{| ll |} \hline
+& \\
+{\bf Sign Test} & \\
+Context &  $n$ observations $ \{ x_{i} \} $ from a continuous distribution with unknown mean $\mu$ \\
+& We want to test $H_{0}: \mu = \mu_{0}$ \\
+Working & Work out signs $ \{ x_{i} -\mu_{0} \}$ (eliminating any zeroes)  \\
+Hypothesis &   $H_{0}: \rho_{+} =0.5$   \\
+Test Statistic & $X=$ \# + signs$  \overset{H_0}{\sim} Bin(n, 0.5)$      \\ 
+& \\  \hline
+\end{tabular}
+\end{center}
+
+
+
+ \begin{questions}
+
+\vspace{.5cm}
+\question  Hypothesis Testing  \\
+
+In your own words, explain the following concepts: \\
+
+\begin {parts}
+\part The purpose of hypothesis testing 
+\part The importance of assumptions
+\part Test statistic
+\part P-value
+\end{parts}
+
+
+\begin{solution}
+(a)The purpose of hypothesis testing is to make a robust decision about an unknown population parameter (specified in $H_{0}$ vs $H_{1}$), based on an observed sample.  It allows evidence based decision making. \\
+
+(b)  A hypothesis test is invalid if the assumptions are not satisfied. We weigh up the validity of assumptions to determine what test to choose, given a choice. \\
+
+(c) A test statistic is a random variable consisting of a function of the observed values, with a distribution depending on the unknown parameter. \\
+
+(c) The p-value is the weighting of the evidence for $H_{1}$ from the sample, assuming $H_{0}$ is true.
+\end{solution}
+
+
+\question  Orange juice consumption  \\
+
+For the last decade in the USA, orange juice sales have fallen almost each year, with per-capita consumption falling roughly 40\%. \\
+{\tiny http://qz.com/176096/how-america-fell-out-of-love-with-orange-juice/} \\
+
+Consider a certain city, where the proportion of families buying a certain brand of orange is believed to be 0.3. A random sample of 50 families from this city shows that only 11 bought that brand of juice.  \\
+
+Let $X$ be the number of families in the sample buying the brand and let $\rho$ be the probability that a randomly picked family prefers the brand. \\
+
+\begin{parts}
+\part Hypothesis: Explain why a one-sided test of $H_0: \rho=0.3  \;\; vs \;\; H_1: \rho<0.3$
+ is appropriate here. \\
+ 
+\part Assumptions: To model $X$ as  a Binomial random variable, what further assumptions are needed?\\
+
+ \part Test statistic: What is the test statistic and its distribution under $H_{0}$? \\
+ 
+\part P-value: Calculate the p-value using R.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{pbinom}\hlstd{(}\hlnum{11}\hlstd{,}\hlnum{50}\hlstd{,}\hlnum{0.3}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\part Conclusion: Draw your conclusion based on the p-value.
+\end{parts}
+
+
+\begin{solution}
+(a) 
+\fbox{H} $H_0: \rho=0.3  \;\; vs \;\; H_1: \rho<0.3$ \\
+We choose a one-sided alternative because the information goven about sales in the USA suggests that the brand is now {\it less} popular than before. \\
+ 
+(b)
+\fbox{A} We assume each of the 50 families are sampled independently and have the same preference $\rho$ for the orange juice brand. \\
+
+(c)
+\fbox{T} $X = \text{Number of families buying the brand} \overset{H_0}{\sim} Bin(50, 0.3)$. 
+
+The observed value is $x=11$. \\
+ 
+(d) 
+\fbox{P}  p-value = $P(X \leq 11) = 0.1390361$. \\
+
+(e)
+\fbox{C} As p-value is about 14\%, the evidence supports $H_{0}$. \\
+ Hence it appears that this brand has not lost its market share.
+
+\end{solution}
+
+
+
+
+
+
+\question Moisture retention \\
+
+The following data are 8 measurements of moisture
+retention (\%) using a new scaling system. This system is expected
+to be better (ie have greater retention) than the system previously
+in use, for which the mean retention was 96\%. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x}\hlkwb{=}\hlkwd{c}\hlstd{(}\hlnum{97.5}\hlstd{,}\hlnum{96.2}\hlstd{,}\hlnum{97.3}\hlstd{,}\hlnum{96.0}\hlstd{,}\hlnum{99.8}\hlstd{,}\hlnum{93.0}\hlstd{,}\hlnum{94.2}\hlstd{,}\hlnum{95.5}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\vspace{.5cm}
+\begin{parts}
+\part Preparation: By comparing the data to 96, write down the signs.\\
+
+\part Hypothesis: Explain why $H_0: \rho=0.5  \;\; vs \;\; H_1: \rho>0.5$
+is the appropriate hypothesis. \\
+
+\part Assumptions: To perform a sign test, what assumptions are needed? \\
+
+\part Test statistic: What is the test statistic and its distribution under $H_{0}$? \\
+
+\part P-value: Calculate the p-value using Binomial Tables.  \\
+
+\part Conclusion: Draw your conclusion based on the p-value.
+\end{parts}
+
+
+\begin{solution}
+(a)
+\fbox{Preparation}
+$\{ \text{Signs} \} = \{ + + +  \; 0 + - - - \}$. 
+(We discard the 0).  \\
+
+(b)
+\fbox{H} 
+$H_0: \mu=0.96  \;\; vs \;\; H_1: \mu>0.96$
+is equivalent to  
+$H_0: \rho=0.5  \;\; vs \;\; H_1: \rho>0.5$ \\
+where $\rho = P(\mbox{Measurement} > 0.96)$.\\
+We use a one-sided test as the system is expected to be better. \\
+
+(c)
+\fbox{A} We assume the data is from a continuous distribution. \\
+
+(d)
+\fbox{T} 
+$X = \text{Number of $+$ signs} \overset{H_0}{\sim} Bin(7,0.5)$.\\
+Observed value: $x=4$. \\
+
+(e)
+\fbox{P}
+$\text{P-value} = P(X \geq 4) = 1- P(X \leq 3) 
+= 1- 0.5 = 0.5$. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1}\hlopt{-}\hlkwd{pbinom}\hlstd{(}\hlnum{3}\hlstd{,}\hlnum{7}\hlstd{,}\hlnum{0.5}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+(f)
+\fbox{C} Given the large $p$=value, we would expect this data 50\% of the time, and hence the evidence is consistent with $H_{0}$. \\
+Hence, it appears that the new system has  not improved. \\
+Note: This was based on a small sample. Increasing the sample size might change the result.
+\end{solution}
+
+
+
+
+
+
+
+
+\newpage
+\hspace{-1cm} {\bf Extra Questions}
+
+
+\question New technique (paired data) \\
+
+A new measuring technique is being considered to replace the standard technique. When 10 samples are measured by both techniques, the measurements are \\
+\begin{center}
+\begin{tabular}{|l|cccccccccc|}\hline
+ Sample\/: &1&2&3&4&5&6&7&8&9&10\\ \hline
+New      &2.5 &2.2 &2.6 &2.6 &1.9 &3.3 &3.3 &2.8 &3.0 &2.9\\
+Standard &2.1 &2.4 &2.1 &1.9 &2.0 &2.8 &2.7 &2.8 &2.8 &3.0\\ \hline
+\end{tabular}
+ \end{center}
+
+\vspace{.5cm}
+Test the hypothesis that there is no long-run systematic difference between the two techniques. \\
+
+Hint: First, calculate Difference = New-Standard. Second, write down the signs of the Differences. Third, perform the sign test.
+
+\begin{solution}
+\fbox{Preparation} \\
+
+\begin{tabular}{|l|cccccccccc|}\hline
+ Sample\/: &1&2&3&4&5&6&7&8&9&10\\ \hline
+New      &2.5 &2.2 &2.6 &2.6 &1.9 &3.3 &3.3 &2.8 &3.0 &2.9\\
+Standard &2.1 &2.4 &2.1 &1.9 &2.0 &2.8 &2.7 &2.8 &2.8 &3.0 \\ 
+Differences = New - Standard & 0.4 & -0.2 & 0.5 & 0.7 & -0.1 & 0.5 & 0.6 & 0 & 0.2 & -0.1 \\
+Signs & + & - & + & + & - & + & + & 0 & + & - \\ \hline
+\end{tabular}
+
+\vspace{.3cm}
+So we have a sample of signs of size $n=9$ with $x=\text{number of + signs}= 6$. \\
+
+Define $X = \text{Number of + signs} \sim Bin(9,\rho)$, where $\rho = P(+ sign) = P(\text{New different than Standard})$. \\
+
+\fbox{H} 
+$H_0: \rho=0.5  \;\; vs \;\; H_1: \rho \neq 0.5$ \\
+
+\fbox{A} We assume the measurements were sampled independently with same $\rho$. \\
+
+\fbox{T} 
+$X \overset{H_0}{\sim} Bin(9,0.5)$.\\
+Observed value: $x=6$. \\
+
+\fbox{P}
+$\text{P-value} = 2 P(X \geq 6) = 2(1- P(X \leq 5)) 
+= 2(1- 0.7461) = 0.5078$. \\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{2}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlkwd{pbinom}\hlstd{(}\hlnum{5}\hlstd{,}\hlnum{9}\hlstd{,}\hlnum{0.5}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.5078125
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\fbox{C} As $\text{p-value}$ is large, the evidence is consistent with $H_{0}$. \\
+Hence, it appears that the standard and new techniques are not systematically different.
+\end{solution}
+
+
+
+
+
+
+\question Gender of children \\
+
+A certain family has 7 children and they are all girls.
+Perform a 2 sided test of the hypothesis that in that family each child is either a boy or
+a girl independently with equal probability. Write all your steps. Calculate the p-value using both Binomial tables and R. 
+
+\begin{solution}
+Let $X = \text{the number of girls in family of 7}$. Then $X \sim Bin(7, \rho)$, where $\rho = P(girl)$. \\
+
+\fbox{H} $H_0: \rho=0.5  \;\; vs \;\; H_1: \rho \neq 0.5$ \\
+ 
+\fbox{A} We assume that the gender of each of the children is independent of the others and that they have the  same probability $\rho = P(girl)$.\\
+
+\fbox{T} $X = \text{Number of girls} \overset{H_0}{\sim} Bin(7, 0.5)$. 
+
+The observed value is $x=7$. \\
+ 
+\fbox{P} \\
+
+Using Formula:\\
+$\text{p-value} = 2 P(X \geq 7) = 2 P(X=7) = 2 {7 \choose 7} (0.5)^7(0.5)^0  = 0.015625$. \\
+
+Using Binomial Tables:\\
+$\text{p-value} = 2 P(X \geq 7) = 2 (1-P(X\leq 6)) =2 (1-0.992) = 0.016$. \\
+
+Using R: \\
+$\text{p-value} \doteq 0 $
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{2}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlkwd{pbinom}\hlstd{(}\hlnum{6}\hlstd{,}\hlnum{7}\hlstd{,}\hlnum{0.5}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.015625
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\vspace{.5cm}
+\fbox{C} As p-value $ < < 0.05$, we have evidence against $H_{0}$ at $\alpha =0.05$. \\
+Hence there is evidence against the family having girls with $\rho = 0.5$. \\
+
+\end{solution}
+
+
+\question  Taste-Testing \\
+
+14 students taste-tested two different brands of drink
+(brand $A$ and brand $B$), with the brands being hidden from them. The
+object of the exercise was to see if students preferred one brand
+over the other, but there was no indication of which this might be
+before the test. Overall, 8 subjects preferred brand $A$, 4 preferred
+brand $B$ and 2 had no preference either way. Use a sign test to test whether there is a difference between the 2 brands.
+Write all your steps. Calculate the p-value using Binomial tables.
+
+
+\begin{solution}
+$X = \text{Number of $+$ signs} \sim Bin(12, p)$, where $\rho = P(\text{preference for brand }A)$ and $x=8$. \\
+Note: 2 readings were discarded (`no preference'), giving us $n=12$. \\
+
+\fbox{H} 
+$H_0: \rho=0.5  \;\; vs \;\; H_1: \rho \neq 0.5$ \\
+
+\fbox{A} We assume the students were sampled independently with same $\rho$. \\
+
+\fbox{T} 
+$X \overset{H_0}{\sim} Bin(12,0.5)$.\\
+Observed value: $x=8$. \\
+
+\fbox{P}
+$\text{P-value} = 2 P(X \geq 8) = 2(1- P(X \leq 7) 
+= 2(1- 0.8062) = 0.3876$. \\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{2}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlkwd{pbinom}\hlstd{(}\hlnum{7}\hlstd{,}\hlnum{12}\hlstd{,}\hlnum{0.5}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.3876953
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\fbox{C} As $\text{p-value}$ is large, the evidence is consistent with $H_{0}$. \\
+Hence, there does not appear to be a differnece between the brands. \\
+\end{solution}
+
+
+
+
+
+
+
+
+
+
+
+\end{questions}
+\end{tutorial}
+\end{document}
