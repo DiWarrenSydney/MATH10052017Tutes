@@ -1,0 +1,605 @@
+\documentclass[bigtut]{tutorial}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\unitcode{MATH1005}
+        \unitname{Statistics}
+        \semester{Summer/Winter/Semester2}
+        \sheetnumber13
+
+\usepackage{graphicx}
+\withsolutions
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\lettersfirst
+
+\begin{tutorial}
+
+\begin{center}
+\begin{tabular}{| ll |} \hline
+& \\
+{\bf Goodness of Fit Test} & \\
+Context & A total of $n$ observed frequencies over $g$ classes \\
+& and a proposed probability model needing $k$ estimated parameters \\
+Hypothesis &   $H_{0}: \mbox{Model fits data}$   \\
+Test Statistic & $\tau = \sum_{i}  \frac{  (O_i - E_i)^2  } {  E_i }  =   \sum_{i}  \frac{  O_i^2  } {  E_i }  -n   \; \; 
+\overset{H_0}{\sim} \; \chi^2_{g-k-1}$      \\ 
+& \\  \hline
+\end{tabular}
+\end{center}
+
+
+\begin{questions}
+
+\vspace{.5cm}
+\question Plant Genotypes (no parameters estimated) \\
+
+ A sample of 100 plants have genotypes A, B, and C occuring with the frequencies 18, 55 and 27 respectively.
+We are interested in the null hypothesis that A, B, and C are in the ratio of 1:2:1. \\
+
+\begin{parts}
+\part Preparation: Fill out the following table
+
+\begin{center}
+ \begin{tabular}{|r|c|c|c|c|}\hline
+      Genotype&A&B&C&Total\\ \hline
+      Observed frequency, $O_i$&18&55&27&100\\\hline
+Expected frequency, $E_i$&  &  &  &100   \\\hline
+ \end{tabular}
+\end{center}
+
+\vspace{.5cm}
+\part Hypothesis: State $H_0$ and $H_1$. \\
+
+\part Assumptions: What are the assumptions for a $\chi^2$ test and are they valid here? \\
+
+ \part Test statistic: What is the test statistic and its distribution under $H_{0}$? \\
+ 
+\part P-value: Calculate the p-value using the $\chi^2$ tables. 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1}\hlopt{-}\hlkwd{pchisq}\hlstd{(}\hlnum{2.62}\hlstd{,}\hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.2698201
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+ \part Conclusion: Draw your conclusion based on the p-value.
+  \end{parts}
+
+
+\begin{solution}
+(a)
+\fbox{Preparation} \\
+
+ \begin{tabular}{|r|c|c|c|c|}\hline
+      Genotype&A&B&C&Total\\ \hline
+      Observed frequency, $O_i$&18&55&27&100\\\hline
+Expected frequency, $E_i$& 25 & 50 & 25  &100   \\\hline
+ \end{tabular}
+
+\vspace{.5cm}
+(b)
+\fbox{H} $H_0: \text{The Genotypes A, B and C occur in the ratio } 1:2:1$ \;\; vs $H_1: \text{Not } H_{0}$. \\
+
+(c)
+\fbox{A} We need $E_{i} \geq 1$ (true here), and no more than 20\% of $E_{i} < 5$ (Cochran's Rule - also true here).\\
+
+(d)
+ \fbox{T}
+ $\tau = \sum_{i}  \frac{  (O_i - E_i)^2  } {  E_i }  =   \sum_{i}  \frac{  O_i^2  } {  E_i }  -100   \; \; 
+\overset{H_0}{\sim} \; \chi^2_{g-k-1} = \chi^2_{3-0-1} = \chi^2_{2}$ \\
+
+Large values of $\tau$ argue against $H_{0}$ for $H_{1}$ (as $\tau$ gets large if any large gaps between $O_{i}$ and $E_{i}$). \\
+
+Observed value: $\tau_{0} = 
+\frac{18^2}{25} + \frac{55^2}{50} + \frac{27^2}{25} - 100 = 2.62$.
+
+(e)
+\fbox{P}  
+$\text{P-value} =  P(\chi^2_{2} > 2.62) > 0.25$. \\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1}\hlopt{-}\hlkwd{pchisq}\hlstd{(}\hlnum{2.62}\hlstd{,}\hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\vspace{.5cm}
+(f)
+\fbox{C}
+Given $P-value$ is large, data supports $H_{0}$ and we conclude that the sample is consistent with Genotypes in the ratio 1:2:1.
+\end{solution}
+
+\vspace{.5cm}
+\question Model Fit (no parameters estimated) \\
+
+100 observations are made on a random variable only taking values 0,
+1, 2 and 3. The frequencies are shown below:
+\begin{center}
+\begin{tabular}[ ]{|l||c|c|c|c|}\hline
+%Value & 0 & 1 & 2 & 3\\\hline Frequency & 20 & 40 & 30 & 10\\\hline
+Value & 0 & 1 & 2 & 3\\\hline Frequency & 22 & 38 & 32 & 8\\\hline
+\end{tabular}
+\end{center}
+
+\vspace{.5cm}
+A goodness of fit test is applied to see if these frequencies are
+well-described by $\mathcal B(3,0.5)$ probabilities.  \\
+
+\begin{parts}
+\part Show that the $\chi^2$ goodness-of-fit statistic is 9.653. 
+
+\begin{center}
+\begin{tabular}[ ]{|l||c|c|c|c|}\hline
+Value & 0 & 1 & 2 & 3 \\ \hline 
+$O_{i}$ & 22 & 38 & 32 & 8 \\ \hline
+$E_{i}$ & 12.5  &  &  &  \\ \hline
+\end{tabular}
+\end{center}
+
+where $E_i = 100 {3 \choose i} 0.5^i 0.5^{3-i}$.
+
+\part Show that the corresponding p-value is somewhere in the interval (0.01, 0.025). \\
+
+\part What is your conclusion?
+\end{parts}
+
+
+\begin{solution}
+\fbox{Preparation} \\
+
+
+\begin{tabular}[ ]{|l||c|c|c|c| c|}\hline
+%Value & 0 & 1 & 2 & 3\\\hline Frequency & 20 & 40 & 30 & 10\\\hline
+Value & 0 & 1 & 2 & 3 & Total  \\\hline Frequency $O_{i}$ & 22 & 38 & 32 & 8 & 100 \\ \hline
+$E_{i}$ & 12.5 &  37.5 & 37.5 & 12.5  &  100 \\ \hline
+\end{tabular}
+
+where $E_{i} = 100 \times p_{i}$, where $p_{i}$ is probability from $Bin(3,0.5)$. \\
+So $E_{i} = 100 \times {3 \choose i} (0.5)^i (0.5)^{3-i}$. \\
+Eg $E_{1} = 100 \times {3 \choose 0} (0.5)^0 (0.5)^{3} = 12.5= E_{3}$. \\
+
+\vspace{.5cm}
+\fbox{H} 
+$H_0: \text{These frequencies are
+well-described by } \mathcal B(3,0.5) \text{ probabilities.}$ \;\; vs $H_1: \text{Not } H_{0}$. \\
+
+\fbox{A} We need $E_{i} \geq 1$ (true here), and no more than 20\% of $E_{i} < 5$ (Cochran's Rule - also true here).\\
+
+\vspace{.5cm}
+(a)
+
+\fbox{T}
+ $\tau = \sum_{i}  \frac{  (O_i - E_i)^2  } {  E_i }  =   \sum_{i}  \frac{  O_i^2  } {  E_i }  -100   \; \; 
+\overset{H_0}{\sim} \; = \chi^2_{4-0-1} = \chi^2_{3}$ \\
+
+Large values of $\tau$ argue against $H_{0}$ for $H_{1}$ (as $\tau$ gets large if any large gaps between $O_{i}$ and $E_{i}$). \\
+
+Observed value: $\tau_{0} = 
+\frac{22^2}{12.5} + \frac{38^2}{37.5} + \ldots \frac{8^2}{12.5} - 100 = 9.653$.
+
+(b
+\fbox{P}  
+Using Table: 
+$\text{P-value} =  P(\chi^2_{3} > 9.653) \in(0.01,0.025)$. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1}\hlopt{-}\hlkwd{pchisq}\hlstd{(}\hlnum{9.653}\hlstd{,}\hlnum{3}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.02175819
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+(c)
+\fbox{C}
+Given $P-value$ is small, we reject $H_{0}$ and conclude that the $\mathcal B(3,0.5)$ is not a good fit for data.
+\end{solution}
+
+
+\question Model Fit (1 parameter estimated) \\
+
+For the previous question, we want to see if another Binomial distribution might explain the frequencies better. \\
+
+\begin{parts}
+ \part Preparation: Estimate $p$ using  \\
+\[ \hat p= \mbox{overall proportion of successes}  = \frac{(0)(22)+ (1)(38) + (2)(32) + (3)(8)}{(3)(100)} \]
+
+\vspace{.5cm}
+\part Preparation: Fill out the frequencies
+
+\begin{center}
+ \begin{tabular}{|r|c|c|c|c|c|} \hline
+      Value & 0 & 1& 2 & 3 &Total\\ \hline
+      Observed frequency, $O_i$ & 22 & 38 & 32 & 8 & 100    \\ \hline
+Expected frequency, $E_i$ & 19.51  &  &  & &  100  \\\hline
+ \end{tabular}
+\end{center}
+
+where $E_i = 100 {3 \choose i} (\hat p)^i (1-\hat p)^{3-i}$.
+
+\vspace{.5cm}
+\part Test the hypothesis that the  frequencies are
+well-described by $\mathcal B(3,\hat p)$ probabilities.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1}\hlopt{-}\hlkwd{pchisq}\hlstd{(}\hlnum{0.88}\hlstd{,}\hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\end{parts}
+
+
+\begin{solution}
+(a)
+ \fbox{Preparation} \\
+ 
+ Estimate $p$ using  \\
+\[ \hat p= \mbox{overall proportion of successes}  = \frac{(0)(22)+ (1)(38) + (2)(32) + (3)(8)}{(3)(100)} = 0.42 \]
+
+Hence: $k=1$. \\
+
+(b)
+\fbox{Preparation}  \\
+
+ \begin{tabular}{|r|cccc|c|} \hline
+      Value & 0 & 1& 2 & 3 &Total\\ \hline
+      Observed frequency, $O_i$ & 22 & 38 & 32 & 8 & 100    \\ \hline
+Expected frequency, $E_i$& 19.51  &  42.39 &  30.69 & 7.41 &  100  \\\hline
+ \end{tabular}
+
+where $E_i = 100 {3 \choose i} (0.42)^i (1-0.42 )^{3-i}$. \\
+Eg $E_0 = 100 {3 \choose 0} (0.42)^0 (1-0.42 )^{3} = 19.5112$ \\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{100}\hlopt{*}\hlkwd{dbinom}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{0.42}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 19.5112
+\end{verbatim}
+\begin{alltt}
+\hlnum{100}\hlopt{*}\hlkwd{dbinom}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{0.42}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 42.3864
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\vspace{.5cm}
+(c)
+\fbox{H} 
+$H_0: \text{These frequencies are
+well-described by } \mathcal B(3,0.42) \text{ probabilities.}$ \;\; vs $H_1: \text{Not } H_{0}$. \\
+
+\fbox{A} We need $E_{i} \geq 1$ (true here), and no more than 20\% of $E_{i} < 5$ (Cochran's Rule - also true here).\\
+
+\fbox{T}
+ $\tau = \sum_{i}  \frac{  (O_i - E_i)^2  } {  E_i }  =   \sum_{i}  \frac{  O_i^2  } {  E_i }  -100   \; \; 
+\overset{H_0}{\sim} \; = \chi^2_{4-1-1} = \chi^2_{2}$ \\
+
+Note: $k=1$ as we had to estimate 1 parameter $\hat{p}$. \\
+
+Large values of $\tau$ argue against $H_{0}$ for $H_{1}$.
+
+Observed value: $\tau_{0} = 
+\frac{22^2}{19.51} + \frac{38^2}{42.39} + \ldots \frac{8^2}{7.41} - 360 = 0.8753231$.
+
+\fbox{P}  \\
+
+Using Table,  $\text{P-value} =  P(\chi^2_{2} > 0.88) > 0.25$. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1}\hlopt{-}\hlkwd{pchisq}\hlstd{(}\hlnum{0.88}\hlstd{,}\hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.6440364
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\fbox{C}
+Given $P-value$ is so large, data strongly supports $H_{0}$ and we conclude that the $\mathcal B(3,0.42)$ seems a good fit for thedata.
+\end{solution}
+
+
+
+
+
+
+\newpage
+\hspace{-1cm} {\bf Extra Questions}
+
+
+
+\question NSW Fatal Accidents 1993 (no parameters estimated) \\
+
+The number of fatal accidents on NSW
+roads in months with 31 days in 1993 were:
+\begin{center}
+\begin{tabular}{ccccccc}
+Jan&Mar&May&July&Aug&Oct&Dec\\
+ 44&56&37&42&59&59&63\\
+\end{tabular}
+\end{center}
+Test the claim that the accident rate is the same for all months.  \\
+
+Hint: Show that the $\tau = 12.09$ and $p$-value is close to 0.05. 
+
+
+\begin{solution}
+fbox{Preparation} \\
+
+\begin{tabular}{| l| ccccccc | c |} \hline
+Month  & Jan & Mar & May & July & Aug & Oct & Dec & Total \\ \hline
+$O_{i}$ & 44 & 56 & 37 & 42 & 59 & 59 & 63 & 360 \\ \hline
+$E_{i}$ & $\frac{360}{7}$ & $\frac{360}{7}$ & $\frac{360}{7} $ & $\frac{360}{7}$ & $\frac{360}{7}$ & $\frac{360}{7}$ & $\frac{360}{7}$  & 360 \\  \hline
+\end{tabular}
+
+\vspace{.5cm}
+\fbox{H} $H_0: \text{The months have the same number of fatal accidents}$ \;\; vs $H_1: \text{Not } H_{0}$. \\
+
+\fbox{A} We need $E_{i} \geq 1$ (true here), and no more than 20\% of $E_{i} < 5$ (Cochran's Rule - also true here).\\
+
+ \fbox{T}
+ $\tau = \sum_{i}  \frac{  (O_i - E_i)^2  } {  E_i }  =   \sum_{i}  \frac{  O_i^2  } {  E_i }  -100   \; \; 
+\overset{H_0}{\sim} \; \chi^2_{g-k-1} = \chi^2_{7-0-1} = \chi^2_{6}$ \\
+
+Large values of $\tau$ argue against $H_{0}$ for $H_{1}$.
+
+Observed value: $\tau_{0} = 
+\frac{44^2}{360/7} + \frac{56^2}{360/7} + \ldots \frac{63^2}{360/7} - 360 = 12.09$.
+
+\fbox{P}  \\
+
+Using Table: \\
+$\text{P-value} =  P(\chi^2_{6} > 12.09) \in(0.05,0.1)$. \\
+
+\fbox{C}
+Given $P-value > 0.05$ (just), we retain $H_{0}$ and conclude that the months seem to have similar number of fatal accidents.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x}\hlkwb{=}\hlkwd{c}\hlstd{(}\hlnum{44}\hlstd{,}\hlnum{56}\hlstd{,}\hlnum{37}\hlstd{,}\hlnum{42}\hlstd{,}\hlnum{59}\hlstd{,}\hlnum{59}\hlstd{,}\hlnum{63}\hlstd{)}
+\hlstd{t} \hlkwb{=} \hlkwd{sum}\hlstd{(x}\hlopt{^}\hlnum{2}\hlopt{/}\hlstd{(}\hlnum{360}\hlopt{/}\hlnum{7}\hlstd{))}\hlopt{-}\hlnum{360}
+\hlstd{t}
+\end{alltt}
+\begin{verbatim}
+## [1] 12.08889
+\end{verbatim}
+\begin{alltt}
+\hlnum{1}\hlopt{-}\hlkwd{pchisq}\hlstd{(t,}\hlnum{6}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.06001493
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{solution}
+
+
+
+
+
+
+\question (Extension: Assessing the goodness of fit of a Normal distribution - estimating 2 parameters) \\
+
+We can use the Chi-squared Test to assess the fit of a Normal distribution to grouped data. \\
+For the Normal distribution, 2 parameters need to be estimated (both mean and sd), hence $k$=2. \\
+To perform a goodness of fit test based on grouped data, we need to estimate the parameters (mean and sd) from the grouped data. \\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x}\hlkwb{=}\hlkwd{scan}\hlstd{(}\hlkwc{file}\hlstd{=}\hlkwd{url}\hlstd{(}\hlstr{"http://www.maths.usyd.edu.au/math1005/r/w13.txt"}\hlstd{))}   \hlcom{# Scan in data}
+
+\hlkwd{hist}\hlstd{(x,}\hlkwc{pr}\hlstd{=T)}                  \hlcom{# Produce a histogram of the data}
+
+\hlkwd{hist}\hlstd{(x,}\hlkwc{pr}\hlstd{=T)}\hlopt{$}\hlstd{breaks}           \hlcom{# Display the breaks in the histogram}
+
+\hlstd{freq}\hlkwb{=}\hlkwd{hist}\hlstd{(x,}\hlkwc{pr}\hlstd{=T)}\hlopt{$}\hlstd{counts}      \hlcom{# Find the counts in each interval}
+\hlstd{freq}
+
+
+\hlstd{mids}\hlkwb{=}\hlstd{(}\hlopt{-}\hlnum{2}\hlopt{:}\hlnum{4}\hlstd{)}\hlopt{+}\hlnum{.5}                  \hlcom{# Find the midpoints of the intervals.}
+\hlstd{mids}
+
+\hlstd{gr.sum}\hlkwb{=}\hlkwd{sum}\hlstd{(freq}\hlopt{*}\hlstd{mids)}         \hlcom{# Find the sum of grouped data}
+\hlstd{gr.sum}
+
+
+\hlstd{gr.sumsq}\hlkwb{=}\hlkwd{sum}\hlstd{(freq}\hlopt{*}\hlstd{mids}\hlopt{^}\hlnum{2}\hlstd{)}     \hlcom{# Find the sum of squares of grouped data}
+\hlstd{gr.sumsq}
+
+\hlstd{gr.mean}\hlkwb{=}\hlstd{gr.sum}\hlopt{/}\hlnum{100}            \hlcom{# Find the mean of grouped data}
+\hlstd{gr.mean}
+
+\hlstd{gr.var}\hlkwb{=}\hlnum{1}\hlopt{/}\hlnum{99}\hlopt{*} \hlstd{(gr.sumsq} \hlopt{-} \hlnum{1}\hlopt{/}\hlnum{100}\hlopt{*} \hlstd{gr.sum}\hlopt{^}\hlnum{2}\hlstd{)}  \hlcom{# Find the variance of grouped data}
+\hlstd{gr.var}
+
+\hlstd{gr.sd}\hlkwb{=}\hlkwd{sqrt}\hlstd{(gr.var)}     \hlcom{# Find the mean of grouped data}
+\hlstd{gr.sd}
+
+\hlkwd{curve}\hlstd{(}\hlkwd{dnorm}\hlstd{(x,}\hlkwc{m}\hlstd{=gr.mean,}\hlkwc{s}\hlstd{=gr.sd),}\hlkwc{lty}\hlstd{=}\hlnum{2}\hlstd{,}\hlkwc{add}\hlstd{=T)}  \hlcom{# Add Normal PDF to the histogram}
+
+\hlstd{lower.probs}\hlkwb{=}\hlkwd{pnorm}\hlstd{(}\hlopt{-}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,}\hlkwc{m}\hlstd{=gr.mean,}\hlkwc{s}\hlstd{=gr.sd)}      \hlcom{# Finding expected probabilites}
+\hlstd{lower.probs}
+
+\hlstd{exp.probs}\hlkwb{=}\hlkwd{diff}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,lower.probs,}\hlnum{1}\hlstd{))}
+\hlstd{exp.probs}
+
+\hlstd{exp.freq}\hlkwb{=} \hlnum{100}\hlopt{*} \hlstd{exp.probs}                        \hlcom{# Expected frequencies  }
+\hlstd{exp.freq}
+
+\hlstd{contrib} \hlkwb{=} \hlstd{((exp.freq}\hlopt{-}\hlstd{freq)}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlstd{exp.freq}          \hlcom{# Chi squared contributions}
+\hlstd{contrib}
+
+\hlkwd{cbind}\hlstd{(freq,exp.freq,contrib)}
+
+\hlstd{tau.obs}\hlkwb{=}\hlkwd{sum}\hlstd{(((exp.freq}\hlopt{-}\hlstd{freq)}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlstd{exp.freq)}      \hlcom{# Chi-squared test statistic}
+\hlstd{tau.obs}
+
+\hlnum{1}\hlopt{-}\hlkwd{pchisq}\hlstd{(tau.obs,} \hlkwc{df}\hlstd{=}\hlkwd{length}\hlstd{(freq)}\hlopt{-}\hlnum{2}\hlopt{-}\hlnum{1}\hlstd{)}         \hlcom{# P-value}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+
+\begin{solution}
+\begin{verbatim}
+> x=scan(file=url("http://www.maths.usyd.edu.au/math1005/r/w13.txt"))
+Read 100 items
+> hist(x,pr=T)
+\end{verbatim}
+
+
+\begin{verbatim}
+> hist(x,pr=T)$breaks
+[1] -2 -1  0  1  2  3  4  5
+
+> freq=hist(x,pr=T)$counts
+> freq
+[1]  7 23 24 18 10 13  5
+
+mids=(-2:4)+.5
+> mids
+[1] -1.5 -0.5  0.5  1.5  2.5  3.5  4.5
+
+> gr.sum=sum(freq*mids)
+> gr.sum
+[1] 110
+
+> gr.sumsq=sum(freq*mids^2)
+> gr.sumsq
+[1] 391
+
+> gr.mean=gr.sum/100
+> gr.sum
+[1] 110
+
+> gr.var=1/99* (gr.sumsq - 1/100* gr.sum^2)
+> gr.var
+[1] 2.727273
+
+> gr.sd=sqrt(gr.var)
+> gr.sd
+[1] 1.651446
+\end{verbatim}
+
+
+\begin{verbatim}
+> lower.probs=pnorm(-1:4,m=gr.mean,s=gr.sd)
+> lower.probs
+[1] 0.1017553 0.2526790 0.4758576 0.7071154 0.8750325
+[6] 0.9604590
+
+> exp.probs=diff(c(0,lower.probs,1))
+> exp.probs
+[1] 0.10175530 0.15092370 0.22317860 0.23125775
+[5] 0.16791712 0.08542650 0.03954103
+
+> exp.freq= 100* exp.probs
+> exp.freq
+[1] 10.175530 15.092370 22.317860 23.125775 16.791712
+[6]  8.542650  3.954103
+
+> contrib = ((exp.freq-freq)^2)/exp.freq
+> contrib
+[1] 0.9910041 4.1431939 0.1267861 1.1361164 2.7470308
+[6] 2.3257383 0.2766496
+
+> cbind(freq,exp.freq,contrib)
+     freq  exp.freq   contrib
+[1,]    7 10.175530 0.9910041
+[2,]   23 15.092370 4.1431939   # High contribution, above Normal curve
+[3,]   24 22.317860 0.1267861
+[4,]   18 23.125775 1.1361164
+[5,]   10 16.791712 2.7470308   # High contribution, below Normal curve
+[6,]   13  8.542650 2.3257383   # High contribution, above Normal curve
+[7,]    5  3.954103 0.2766496
+
+> tau.obs=sum(((exp.freq-freq)^2)/exp.freq)
+> tau.obs
+[1] 11.74652
+
+> 1-pchisq(tau.obs, df=length(freq)-2-1)   # Note we estimate both mean and sd, so k=2
+[1] 0.0193392                              # Hence we would reject the fit of Normal.
+\end{verbatim}
+
+Comment: Perhaps the population that this sample comes from is bimodal, rather than unimodal (Normal). Most of the discrepancy comes from the 2 intervals where the 2 `modes' (peaks) are.
+
+\end{solution}
+
+
+
+\end{questions}
+
+\end{tutorial}
+\end{document}
+
